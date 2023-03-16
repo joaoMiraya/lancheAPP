@@ -11,7 +11,7 @@ import lancheImg from '../../../assets/images/hamburguer.png'
 
 function Home(props) {
 
-    const priceLancheRef = useRef();
+  /*   const priceLancheRef = useRef();
     const qntUndLancheRef = useRef();
     const carouselRef = useRef();
 
@@ -60,20 +60,18 @@ function Home(props) {
         e.preventDefault();
         console.log('left click')
         carouselRef.current.scrollLeft -= 125
-        if(carouselRef.clientWidth <= 125){
-            carouselRef.current.scrollLeft += 375
-        }
+        
     }
     const handleClickRight = (e) => {
         e.preventDefault();
         console.log('rigth click')
         carouselRef.current.scrollLeft += 125
-    }
+    } */
 
 
     return (
         <>
-            <div className="container relative">
+            {/* <div className="container relative">
                 <div ref={carouselRef} className="container overflow-x-scroll flex mt-20 w-full  ">
 
                     {lanches.map((lanche, index) => {
@@ -119,10 +117,13 @@ function Home(props) {
                     <AiOutlineLeft onClick={handleClickLeft} size={30} className=" text-gray-600 absolute top-1/2 left-0  bg-white rounded-full cursor-pointer" />
                     <AiOutlineLeft onClick={handleClickRight} size={30} className=" text-gray-600 absolute top-1/2 right-0 rotate-180 bg-white rounded-full cursor-pointer" />
                 </div>
-            </div>
+            </div> */}
         </>
     )
 };
 
 
 export default Home;
+
+
+

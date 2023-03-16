@@ -1,45 +1,108 @@
-import { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import './App.css'
+import Footer from './components/paterns/Footer';
 
-import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { MdOutlineMenuBook } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
-import { AiOutlineMenu } from 'react-icons/ai';
-
+import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart, AiOutlineInstagram, AiOutlineFacebook } from 'react-icons/ai';
 
 import lanchebg from './assets/images/lanchebg.png';
-import logoImage from './assets/images/logo.png';
+import logoImage from './assets/images/logomarcahamburgueria.png'
 
 function App() {
-  /* bg-center bg-[url('/src/assets/images/lanchebg.png')] */
+
+  /*   FUNÇÃO PARA ABRIR MENU HAMB */
+  const [open, setOpen] = useState(false);
+  function OpenMenu() {
+    if (!open) {
+      setOpen(true)
+    } else {
+      setOpen(false)
+    }
+  }
+  /* FIM DA FUNÇÃO PARA ABRIR MENU HAMB */
+
+  /* FUNÇÃO DO MENU FIXO */
+  
+  const menuFixedRef = useRef();
+
+  const [startY, setStartY] = useState(null);
+  const [endY, setEndY] = useState(null);
+  
+  const handleTouchStart = (e) => {
+    setStartY(e.touches[0].clientY);
+  };
+  
+  const handleTouchMove = (e) => {
+    setEndY(e.touches[0].clientY);
+  };
+  
+  const handleTouchEnd = () => {
+    if (endY > startY) {
+      console.log('Swipe up');
+      menuFixedRef.current.classList.remove('fixedMenuHidden')
+    } else if (endY < startY) {
+      console.log('Swipe down');
+      menuFixedRef.current.classList.add('fixedMenuHidden')
+
+    }
+  }
+       
+  /*FIM FUNÇÃO DO MENU FIXO */
+
   return (
 
-    <div className="container mx-auto">
+    <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className="container mx-auto">
       <nav className=" bg-gradient-to-tr from-amber-500 to-red-800  max-h-24  flex-col w-full relative ">
-        <img className=' w-full h-full object-none absolute overflow-visible z-0' src={lanchebg} alt="..." />
+        <img className=' w-full h-full object-none absolute overflow-visible z-0 drop-shadow-xl' src={lanchebg} alt="..." />
         <div className='p-5 flex z-10'>
           <Link to={'/'}> <img className='w-16 h-16 z-50 absolute top-0' src={logoImage} alt="Logo" /></Link>
         </div>
 
-        <div className='flex justify-end '>
-          <AiOutlineMenu size={25} />
+        <div className='flex justify-end mr-4 relative '>
+          <div className={`${open ? 'hidden' : ''}`} >
+            <AiOutlineMenu className='text-white z-40' onClick={OpenMenu} size={25} />
+          </div>
+
+          <div className={`${open ? ' ' : 'hidden'}`} >
+            <AiOutlineClose className='text-white ' onClick={OpenMenu} size={25} />
+          </div>
         </div>
       </nav>
+      <div className={`bg-gradient-to-br from-amber-500 to-red-800 top-0 left-0 h-screen w-1/2 flex items-center flex-col justify-evenly
+      ${open ? '' : 'closeMenu'}`}>
+        <div className='h-1/5 flex flex-col justify-end'>
+          <ul className='text-white'>
+            <li className='mt-4'>Contato</li>
+            <li className='mt-4'>Sobre nós</li>
+            <li className='mt-4'>Termos e Políticas</li>
+            <li className='mt-4'>Área de entrega</li>
+          </ul>
+        </div>
+        <img className='w-16 h-16 ' src={logoImage} alt="Logo" />
+        <div className='flex gap-4 text-white'>
+          <AiOutlineInstagram size={30} />
+          <AiOutlineFacebook size={30} />
+        </div>
+      </div>
       <Outlet></Outlet>
 
-     
-        <div className='flex items-center mt-2 justify-around shadow border-t-2 border-gray-400 bg-white w-full text-gray-600 h-10 bottom-0 fixed'>
-          <Link to={'/'}> <AiOutlineShoppingCart size={25} /> </Link>
-          <Link to={'/menu'}> <MdOutlineMenuBook size={25} /> </Link>
-          <Link to={'/profile'}> <CgProfile size={25} /> </Link>
-        </div>
-    
 
+      <div ref={menuFixedRef} className=' z-40 flex items-center mt-2 justify-around shadow border-t-2 border-gray-400 bg-white w-screen text-gray-600 h-10 fixed bottom-0 '>
+        <div className=' relative'>
+          <Link to={'/finalizar-pedido'}> <AiOutlineShoppingCart size={25} /> </Link>
+          <span className='  bg-red-500 rounded-full absolute top-[-10px] right-[-10px] text-white text-xs'><span className=' p-1'>1</span></span>
+        </div>
+        <Link to={'/menu'}> <MdOutlineMenuBook size={25} /> </Link>
+        <Link to={'/profile'}> <CgProfile size={25} /> </Link>
+      </div>
+
+      <Footer />
     </div>
 
 
   )
 }
 
-export default App
+export default App;

@@ -1,12 +1,37 @@
-import React from "react";
+import React, {useState, useEffect, useRef} from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
-import SlideItem from "../../componentsReut/slideItem";
-
-/* import { Carousel } from '@trendyol-js/react-carousel'; */
+import Carousel from "../../componentsReut/Carousel";
 
 
 function MenuLanches(props) {
+
+    const [lanchesF, setLanchesF] = useState([]);
+    const [lanchesC, setLanchesC] = useState([]);
+
+
+    useEffect(() => {
+        axios.get('http://localhost:3550/lanches/category/frango')
+            .then(LancheFReturn => {
+                setLanchesF(LancheFReturn.data.map(lancheF => ({
+                    ...lancheF,
+                    count: 0,
+                })));
+            })
+            .catch(err => console.log(err))
+    }, []);
+
+    useEffect(() => {
+        axios.get('http://localhost:3550/lanches/category/calabresa')
+            .then(LancheCReturn => {
+                setLanchesC(LancheCReturn.data.map(lancheC => ({
+                    ...lancheC,
+                    count: 0,
+                })));
+            })
+            .catch(err => console.log(err))
+    }, []);
 
 
 
@@ -14,23 +39,9 @@ function MenuLanches(props) {
     return (
         <>
             <div className="container ">
+                <Carousel title="LanchesF" items={lanchesF} />
+                <Carousel title="LanchesC" items={lanchesC} />
 
-           {/*      <div className=" flex justify-center items-center text-center w-screen px-4" >
-                    <Carousel show={1.5} slide={1} swiping={true}>
-
-                        <SlideItem />
-                        <SlideItem />
-                        <SlideItem />
-                        <SlideItem />
-                        <SlideItem />
-                        <SlideItem />
-                        <SlideItem />
-                        <SlideItem />
-
-
-
-                    </Carousel>,
-                </div> */}
             </div>
         </>
     )

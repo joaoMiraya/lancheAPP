@@ -1,23 +1,18 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import SlideCalab from "../../componentsReut/SlideCalab";
-import SlideItem from "../../componentsReut/slideItem";
+import Carousel from "../../componentsReut/Carousel";
 
 function Profile() {
 
 
 
     return (
-<>
-
-        <div className="container flex justify-center items-center mt-20">
-            
-            
+        <>
+<h1>perfil</h1>
             <Outlet></Outlet>
-            <SlideCalab />
 
-        </div>
+
 
 
 

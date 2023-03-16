@@ -9,6 +9,7 @@ import Profile from './components/pages/profile/Profile';
 import EditProfile from './components/pages/profile/EditProfile'
 import Menu from './components/pages/menu/Menu';
 import MenuLanches from './components/pages/menu/MenuLanches'
+import Cart from './components/pages/cart/Cart'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <BrowserRouter>
@@ -22,16 +23,16 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Route>
 
         <Route path='/profile'
-          element={<Profile />}>
-          <Route path='/profile/edit' element={<EditProfile />}></Route>
+          element={<Profile />} end>
+          <Route path='/profile/edit' element={<EditProfile />} />
         </Route>
 
 
         <Route path='/menu'
           element={<Menu />}>
-            <Route path='/menu/lanches' element={<MenuLanches />} />
-          </Route>
-
+          <Route path='/menu/lanches' element={<MenuLanches />} />
+        </Route>
+        <Route path='/finalizar-pedido' element={<Cart />}></Route>
       </Route>
 
     </Routes>

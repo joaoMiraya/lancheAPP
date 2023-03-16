@@ -21,3 +21,24 @@ body{
 .hidden{
     display: none;
 }
+::-webkit-scrollbar{
+    opacity: 0;
+}
+
+.closeMenu{
+position: absolute;
+bottom: 100%;
+opacity: 0;
+transition: .5s ease-in-out;
+}
+
+.compCartStyle{
+    border: solid 1px #6a6a6a;
+    background-color: #FFF;
+}
+
+.fixedMenuHidden{
+    height: 0px;
+    opacity: 0;
+    transition: .5s;
+}
