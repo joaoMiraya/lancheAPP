@@ -1,14 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Outlet, Link } from 'react-router-dom'
-import './App.css'
+import React, { useState, useRef, useContext } from 'react';
+import { Outlet, Link } from 'react-router-dom';
+import './App.css';
 import Footer from './components/paterns/Footer';
+import { CartContext } from './assets/utils/cartContext';
 
 import { MdOutlineMenuBook } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
 import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart, AiOutlineInstagram, AiOutlineFacebook } from 'react-icons/ai';
 
 import lanchebg from './assets/images/lanchebg.png';
-import logoImage from './assets/images/logomarcahamburgueria.png'
+import logoImage from './assets/images/logomarcahamburgueria.png';
 
 function App() {
 
@@ -24,37 +25,42 @@ function App() {
   /* FIM DA FUNÇÃO PARA ABRIR MENU HAMB */
 
   /* FUNÇÃO DO MENU FIXO */
-  
+
   const menuFixedRef = useRef();
 
   const [startY, setStartY] = useState(null);
   const [endY, setEndY] = useState(null);
-  
+
   const handleTouchStart = (e) => {
     setStartY(e.touches[0].clientY);
   };
-  
+
   const handleTouchMove = (e) => {
     setEndY(e.touches[0].clientY);
   };
-  
+
   const handleTouchEnd = () => {
     if (endY > startY) {
-      console.log('Swipe up');
       menuFixedRef.current.classList.remove('fixedMenuHidden')
     } else if (endY < startY) {
-      console.log('Swipe down');
       menuFixedRef.current.classList.add('fixedMenuHidden')
 
     }
-  }
-       
+  };
+
   /*FIM FUNÇÃO DO MENU FIXO */
+
+  /*  INICIO CARRINHO DE COMPRAS */
+  const { cartItems, setCartItems } = useContext(CartContext);
+
+  const quantity = cartItems.reduce((acc, current) => {
+    return acc + current.quantity;
+  }, 0)
 
   return (
 
-    <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} className="container mx-auto">
-      <nav className=" bg-gradient-to-tr from-amber-500 to-red-800  max-h-24  flex-col w-full relative ">
+    <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} >
+      <nav className=" bg-gradient-to-tr from-amber-500 to-red-800  max-h-24  z-40  flex justify-between items-end w-full relative ">
         <img className=' w-full h-full object-none absolute overflow-visible z-0 drop-shadow-xl' src={lanchebg} alt="..." />
         <div className='p-5 flex z-10'>
           <Link to={'/'}> <img className='w-16 h-16 z-50 absolute top-0' src={logoImage} alt="Logo" /></Link>
@@ -70,7 +76,7 @@ function App() {
           </div>
         </div>
       </nav>
-      <div className={`bg-gradient-to-br from-amber-500 to-red-800 top-0 left-0 h-screen w-1/2 flex items-center flex-col justify-evenly
+      <div className={`bg-gradient-to-br absolute z-10 from-amber-500  to-red-800 top-0 left-0 h-screen w-1/2 flex items-center flex-col justify-evenly
       ${open ? '' : 'closeMenu'}`}>
         <div className='h-1/5 flex flex-col justify-end'>
           <ul className='text-white'>
@@ -89,10 +95,12 @@ function App() {
       <Outlet></Outlet>
 
 
-      <div ref={menuFixedRef} className=' z-40 flex items-center mt-2 justify-around shadow border-t-2 border-gray-400 bg-white w-screen text-gray-600 h-10 fixed bottom-0 '>
+      <div ref={menuFixedRef} className=' z-20 flex items-center mt-2 justify-around shadow border-t-2 border-gray-400 bg-white w-full text-gray-600 h-10 fixed bottom-0 '>
         <div className=' relative'>
           <Link to={'/finalizar-pedido'}> <AiOutlineShoppingCart size={25} /> </Link>
-          <span className='  bg-red-500 rounded-full absolute top-[-10px] right-[-10px] text-white text-xs'><span className=' p-1'>1</span></span>
+          <span className='  bg-red-500 rounded-full absolute top-[-10px] right-[-10px] text-white text-xs'>
+            <span className=' p-1'>{quantity}</span>
+          </span>
         </div>
         <Link to={'/menu'}> <MdOutlineMenuBook size={25} /> </Link>
         <Link to={'/profile'}> <CgProfile size={25} /> </Link>

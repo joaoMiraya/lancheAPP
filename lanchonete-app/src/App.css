@@ -30,6 +30,7 @@ position: absolute;
 bottom: 100%;
 opacity: 0;
 transition: .5s ease-in-out;
+display: none;
 }
 
 .compCartStyle{
@@ -42,3 +43,7 @@ transition: .5s ease-in-out;
     opacity: 0;
     transition: .5s;
 }
+input{
+    outline: none;
+}
+

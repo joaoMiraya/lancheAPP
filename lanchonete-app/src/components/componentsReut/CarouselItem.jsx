@@ -1,17 +1,49 @@
-import React, { useRef } from "react";
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import { AiOutlineMinusCircle } from "react-icons/ai";
-import { AiOutlineLeft } from "react-icons/ai";
+import React, { useRef, useContext } from "react";
 import lancheImg from "../../assets/images/hamburguer.png";
+
+import { CartContext } from "../../assets/utils/cartContext";
+
 
 function CarouselItem({ title, items }) {
     const priceLancheRef = useRef();
-    const qntUndLancheRef = useRef();
     const categoryRef = useRef();
 
-console.log(items)
+    const { cartItems, setCartItems } = useContext(CartContext);
+    
 
+    const addToCart = () => {
+        setCartItems(() => {
+            const isItemFound = items.find((item) => item.id === 1 );
+            console.log(isItemFound)
+            if (isItemFound) {
+                return items.map((item) => {
+                    if (item.id === id) {
+                        return { ...item, quantity: item.quantity + 1 }
+                    } else {
+                        return item;
+                    }
+                });
+            } else {
+                return [...items, { id, quantity: 1, preco }];
+            }
+        });
+    };
 
+    const removeItem = (id) => {
+        setCartItems((currentItems) => {
+            if (currentItems.find((item) => item.id === id)?.quantity === 1) {
+                return currentItems.filter((item) => item.id !== id)
+            } else {
+                return currentItems.map((item) => {
+                    if (item.id === id) {
+                        return { ...item, quantity: item.quantity - 1 };
+                    } else {
+                        return item;
+                    }
+                })
+            }
+        })
+    }
 
     return (
 
@@ -19,41 +51,33 @@ console.log(items)
 
             {items.map((lanche, index) => {
                 return (
-                    <div key={lanche.id} className=" p-2 ml-6 flex  flex-col justify-center items-center h-56 max-w-[150px]
+                    <div key={lanche.id} className="  ml-6 flex  flex-col justify-center items-center h-56 max-w-[150px]
      min-w-[150px] perspective bg-white rounded-md drop-shadow-md group"
                     >
 
                         <div className="text-center preserve-3d group-hover:my-rotate-y-180 w-full h-full duration-500">
                             <div className=" absolute backface-hidden w-full h-full ">
-                                <h1 className="text-gray-600">{lanche.nome}</h1>
+                                <h1 className="text-white rounded-t-md bg-gradient-to-br from-amber-500 to-red-800">{lanche.nome}</h1>
                                 <img className="w-full h-full max-h-[150px]" src={lancheImg} width={150} height={150} alt="Lanche" />
                             </div>
-                            <div className="  my-rotate-y-180 backface-hidden w-full h-full bg-white">
+                            <div className="  my-rotate-y-180 backface-hidden rounded-md w-full h-full bg-white">
                                 <div className="text-center flex flex-col items-center h-full justify-center">
                                     <p className="text-xs ">{lanche.ingredientes}</p>
                                 </div>
 
                                 <input ref={priceLancheRef}
+                                    className="w-full h-4 bg-white text-center outline-none text-xl"
                                     readOnly
                                     type="text"
-                                    className="w-full h-4 bg-white text-center"
                                     value={'R$' + lanche.preco + ',00'}
                                 />
 
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-4 mt-6 ">
-                            {/*   AQUI VAI A CHAMAR FUNÇÃO PARA DECREMENTAR */}
-                            <AiOutlineMinusCircle size={22} className="text-red-600" />
-                            <input className="w-12 border-b-4 text-center outline-none"
-                                type="text"
-                                value={lanche.count}
-                                readOnly
-                                ref={qntUndLancheRef}
-                            />
-                            {/*   AQUI VAI A CHAMAR FUNÇÃO PARA INCREMENTAR */}
-                            <AiOutlinePlusCircle size={22} className="text-green-600" />
+                        <div className="flex items-center justify-center font-[400] text-white bg-gradient-to-br from-amber-500 to-red-800 h-8 rounded-b-md w-full mt-6 ">
+                            <button onClick={addToCart}>ADICIONAR</button>
+
                         </div>
 
                     </div>

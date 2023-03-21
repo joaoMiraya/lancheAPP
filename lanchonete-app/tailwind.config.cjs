@@ -25,9 +25,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      animation: {
+        'spin-slow': 'spin 3s linear infinite',
+      },
       backgroundImage: {
-        'lanchebg': "url('/src/assets/images/lanchebg.png')",
-        'lancheHomebg': "url('/src/assets/images/lancheHomebg.png')",
+        'chamabghome': "url('/src/assets/images/chamabghome.png')",
       },
       maxWidth: {
         '150px': '150px',
@@ -57,10 +59,10 @@ module.exports = {
         semibold: '600',
         bold: '700',
         extrabold: '800',
-        'extra-bold': '800',
         black: '900',
       },
     },
+    
   },
   plugins: [Myclass],
 }

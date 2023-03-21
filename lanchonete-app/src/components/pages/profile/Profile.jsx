@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 
-import Carousel from "../../componentsReut/Carousel";
 
 function Profile() {
 
@@ -9,9 +8,10 @@ function Profile() {
 
     return (
         <>
-<h1>perfil</h1>
-            <Outlet></Outlet>
+            <h1>perfil</h1>
 
+
+            <Outlet></Outlet>
 
 
 
