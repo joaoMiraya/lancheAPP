@@ -6,44 +6,46 @@
 @tailwind utilities;
 
 
-*>*{
- font-family: 'Roboto', sans-serif;
- padding: 0;
- margin: 0;
- box-sizing: border-box;
- font-size: 62,5%;
-}
-body{
-@apply bg-gray-300;
-@apply text-gray-600;
+*>* {
+    padding: 0px;
+    margin: 0px;
 }
 
-.hidden{
+body {
+    @apply bg-gray-300;
+    @apply text-gray-600;
+    box-sizing: border-box;
+    font-size: 62, 5%;
+    font-family: 'Roboto', sans-serif;
+}
+
+.hidden {
     display: none;
 }
-::-webkit-scrollbar{
+
+::-webkit-scrollbar {
     opacity: 0;
 }
 
-.closeMenu{
-position: absolute;
-bottom: 100%;
-opacity: 0;
-transition: .5s ease-in-out;
-display: none;
+.closeMenu {
+    position: absolute;
+    bottom: 100%;
+    opacity: 0;
+    transition: .5s ease-in-out;
+    display: none;
 }
 
-.compCartStyle{
+.compCartStyle {
     border: solid 1px #6a6a6a;
     background-color: #FFF;
 }
 
-.fixedMenuHidden{
+.fixedMenuHidden {
     height: 0px;
     opacity: 0;
     transition: .5s;
 }
-input{
+
+input {
     outline: none;
 }
-

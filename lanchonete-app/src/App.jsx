@@ -60,7 +60,7 @@ function App() {
   return (
 
     <div onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd} >
-      <nav className=" bg-gradient-to-tr from-amber-500 to-red-800  max-h-24  z-40  flex justify-between items-end w-full relative ">
+      <nav className=" bg-gradient-to-tr from-amber-500 to-red-800  max-h-24  z-40  flex justify-between items-end relative ">
         <img className=' w-full h-full object-none absolute overflow-visible z-0 drop-shadow-xl' src={lanchebg} alt="..." />
         <div className='p-5 flex z-10'>
           <Link to={'/'}> <img className='w-16 h-16 z-50 absolute top-0' src={logoImage} alt="Logo" /></Link>

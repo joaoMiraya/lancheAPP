@@ -59,7 +59,7 @@ function Carousel() {
 
     return (
 
-        <div className="container mt-20">
+        <div className="container p-0 mt-20">
             <div className=" flex w-screen justify-center">
                 <form >
                     <div className="bg-white rounded-md flex h-8 my-2 ">

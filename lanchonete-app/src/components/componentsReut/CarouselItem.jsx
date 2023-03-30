@@ -57,7 +57,7 @@ function CarouselItem({ title, items }) {
 
                         <div className="text-center preserve-3d group-hover:my-rotate-y-180 w-full h-full duration-500">
                             <div className=" absolute backface-hidden w-full h-full ">
-                                <h1 className="text-white rounded-t-md bg-gradient-to-br from-amber-500 to-red-800">{lanche.nome}</h1>
+                                <h1 className="text-white rounded-t-md bg-gradient-to-br from-amber-500 to-red-800 py-1">{lanche.nome}</h1>
                                 <img className="w-full h-full max-h-[150px]" src={lancheImg} width={150} height={150} alt="Lanche" />
                             </div>
                             <div className="  my-rotate-y-180 backface-hidden rounded-md w-full h-full bg-white">

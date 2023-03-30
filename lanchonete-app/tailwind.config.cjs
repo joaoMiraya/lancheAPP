@@ -30,6 +30,7 @@ module.exports = {
       },
       backgroundImage: {
         'chamabghome': "url('/src/assets/images/chamabghome.png')",
+        'pizzabg': "url('/src/assets/images/pizzabg.jpg')",
       },
       maxWidth: {
         '150px': '150px',
