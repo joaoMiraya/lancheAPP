@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CartProvider } from './assets/utils/cartContext';
 
 import Loading from './components/componentsReut/LoadingComp';
@@ -15,47 +16,51 @@ const EditProfile = lazy(() => import("./components/pages/profile/EditProfile"))
 const Menu = lazy(() => import("./components/pages/menu/Menu"));
 const MenuLanches = lazy(() => import("./components/pages/menu/Lanches/MenuLanches"));
 const MenuPizzas = lazy(() => import("./components/pages/menu/Pizzas/MenuPizzas"));
+const PorcoesMenu = lazy(() => import("./components/pages/menu/Porcoes/PorcoesMenu"));
 const Cart = lazy(() => import("./components/pages/cart/Cart"));
 
 
-
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <CartProvider>
-    <BrowserRouter>
-      <Suspense fallback={<Loading />}>
-        <Routes>
+  <QueryClientProvider client={queryClient}>
+    <CartProvider>
+      <BrowserRouter>
+        <Suspense fallback={<Loading />}>
+          <Routes>
 
-          <Route path='/'
-            element={<App />}>
+            <Route path='/'
+              element={<App />}>
 
-            <Route exact path='/'
-              element={<Home />}>
+              <Route exact path='/'
+                element={<Home />}>
+              </Route>
+
+              <Route path='/cadastro'
+                element={<Cadastro />}>
+              </Route>
+
+              <Route path='/profile'
+                element={<Profile />} end>
+                <Route path='/profile/edit' element={<EditProfile />} />
+              </Route>
+
+
+              <Route path='/menu'
+                element={<Menu />}>
+              </Route>
+              <Route path='/menu/lanches' element={<MenuLanches />} />
+              <Route path='/menu/pizzas' element={<MenuPizzas />} />
+              <Route path='/menu/porcoes' element={<PorcoesMenu />} />
+
+              <Route path='/finalizar-pedido' element={<Cart />}></Route>
             </Route>
 
-            <Route path='/cadastro'
-              element={<Cadastro />}>
-            </Route>
-
-            <Route path='/profile'
-              element={<Profile />} end>
-              <Route path='/profile/edit' element={<EditProfile />} />
-            </Route>
 
 
-            <Route path='/menu'
-              element={<Menu />}>
-            </Route>
-            <Route path='/menu/lanches' element={<MenuLanches />} />
-            <Route path='/menu/pizzas' element={<MenuPizzas />} />
-
-            <Route path='/finalizar-pedido' element={<Cart />}></Route>
-          </Route>
-
-
-
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
-  </CartProvider >
+          </Routes>
+        </Suspense>
+      </BrowserRouter>
+    </CartProvider >
+  </QueryClientProvider>
 )

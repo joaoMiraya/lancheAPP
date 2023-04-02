@@ -37,16 +37,18 @@ function MenuPizzas() {
     }
 
     const [selectFlavor, setSelectFlavor] = useState(0);
+    const flavorTwoRef = useRef();
+    const flavorOneRef = useRef();
 
-
-    function SelectFlavor() {
-        console.log('click')
+    function SelectFlavor(pizza) {
         if (selectFlavor === 0) {
             setSelectFlavor(selectFlavor + 1)
+            console.log(pizza)
         } else if (selectFlavor === 1) {
             setSelectFlavor(selectFlavor - 1)
             alert('Pedido no carrinho')
-        } 
+            console.log(pizza)
+        }
     }
 
     return (
@@ -58,11 +60,13 @@ function MenuPizzas() {
                 howFlavor={howFlavor}
                 PizzaSizeFunction={PizzaSizeFunction}
                 pizzaSize={pizzaSize}
+                flavorOneRef={flavorOneRef}
+                flavorTwoRef={flavorTwoRef}
             />
 
             <div className="flex flex-col mt-6 w-full ">
-               { !howFlavor ? <h1 className="text-3xl text-center">Selecione o sabor</h1> : <h1 className="text-3xl text-center">Selecione o {selectFlavor != 0 ? '2°' : '1°'} sabor</h1> }
-           
+                {!howFlavor ? <h1 className="text-3xl text-center">Selecione o sabor</h1> : <h1 className="text-3xl text-center">Selecione o {selectFlavor != 0 ? '2°' : '1°'} sabor</h1>}
+
                 <div className="flex justify-end whitespace-nowrap pr-2 text-red-500">
                     <p>A partir de {pizzaSize ? 'R$15,00' : 'R$45,00'}</p>
                 </div>
@@ -77,7 +81,7 @@ function MenuPizzas() {
                                 </div>
                                 <div className="flex flex-col h-full items-end ">
                                     <p className="font-semibold">R${pizzaSize ? pizza.preco_p : pizza.preco}</p>
-                                    {howFlavor ? <button className={`${selectFlavor === 1 ? 'rotate-180 text-red-500' : ''}`} onClick={SelectFlavor}><BsOctagonHalf size={25} /></button> : < AiOutlineShoppingCart size={25} />}
+                                    {howFlavor ? <button className={`${selectFlavor === 1 ? 'rotate-180 text-red-500' : ''}`} onClick={() => SelectFlavor(pizza)}><BsOctagonHalf size={25} /></button> : < AiOutlineShoppingCart size={25} />}
                                 </div>
                             </div>
 

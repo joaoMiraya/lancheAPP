@@ -28,15 +28,8 @@ function Home() {
         continueSemCadastroRef.current.classList.toggle('hidden')
     }
     /*FIM MODAL FUNCTIONS */
-    const [comp, setComp] = useState(0);
 
-    useEffect(() => {
-        if (comp === 0) {
-            console.log(comp)
-        } else {
-            console.log(comp)
-        }
-    }, [comp]);
+    const [comp, setComp] = useState(0);
 
     function ChangeComp() {
         if (comp === 0) {
@@ -44,8 +37,6 @@ function Home() {
         } else {
             setComp(comp - 1)
         }
-
-
     }
 
     return (

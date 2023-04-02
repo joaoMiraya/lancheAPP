@@ -22,10 +22,13 @@ function MenusOfMenu() {
                 </div>
             </Link>
 
-            <div className="bg-white flex flex-col min-w-[95px] items-center rounded-md p-2 text-center drop-shadow-2xl">
-                <h1 className="text-xl">Porções</h1>
-                <CiFries size={50} />
-            </div>
+            <Link to={"porcoes"}>
+                <div className="bg-white flex flex-col min-w-[95px] items-center rounded-md p-2 text-center drop-shadow-2xl">
+                    <h1 className="text-xl">Porções</h1>
+                    <CiFries size={50} />
+                </div>
+            </Link>
+            
         </div>
 
     )
