@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, ref } from 'yup';
 import axios from 'axios';
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-
+import { useMutation, useQueryClient} from "@tanstack/react-query";
+import bcrypt from "bcryptjs";
 
 const validationForm = object().shape({
     nameRegister: string().required("O campo é obrigatório"),
@@ -27,18 +27,21 @@ function Cadastro({ ChangeComp }) {
         resolver: yupResolver(validationForm)
     });
 
-  
+
     const date = new Date().toLocaleString();
     const formatedDate = date.slice(0, 10);
 
     const createUserMutation = useMutation((data) => {
+
+        const cryptPass = bcrypt.hashSync(data.passwordRegister, 10)
         const values = {
             nome: data.nameRegister,
             sobrenome: data.lastnameRegister,
             email: data.emailRegister,
-            senha: data.passwordRegister,
+            senha: cryptPass,
             data_cadastro: formatedDate
         }
+
         return axios.post('http://localhost:3550/clientes', values);
     }, {
         onSuccess: () => {
@@ -54,7 +57,6 @@ function Cadastro({ ChangeComp }) {
 
     const createUser = useCallback(async (data) => {
         await createUserMutation.mutateAsync(data);
-        console.log(data)
     }, []);
 
     return (

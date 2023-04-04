@@ -1,10 +1,10 @@
-import React, {useState} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { object, string, ref } from 'yup';
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { object, string } from 'yup';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const schema = object().shape({
     emailToLogin: string().email("Email inválido").required("O campo é obrigatório!"),
@@ -12,14 +12,16 @@ const schema = object().shape({
 });
 
 function Login({ ChangeComp }) {
-
     const navigate = useNavigate();
     const queryClient = useQueryClient();
+    const manterAcessoRef = useRef();
+    const [passErr, setPassErr] = useState(false);
+    const [emailErr, setEmailErr] = useState(false);
 
-   
+
 
     const login = async (data) => {
-        const response = await axios.post(`http://localhost:3550/clientes/check-email${emailToLogin}`, data);
+        const response = await axios.post("http://localhost:3550/auth/login", data);
         return response.data;
     };
 
@@ -32,17 +34,23 @@ function Login({ ChangeComp }) {
     const onSubmit = (data) => {
         mutate(data, {
             onSuccess: (data) => {
+                navigate("/menu")
                 console.log(data)
-                
+                if (manterAcessoRef.current.checked) {
+                    localStorage.setItem('user', JSON.stringify(data.userSession))
+                } else {
+                    sessionStorage.setItem('user', JSON.stringify(data.userSession))
+                }
             },
             onError: (error) => {
-                alert("Não foi possivel efetuar o login")
-                console.log(error)
-                console.log(data)
+                if (error.response.status === 401) {
+                    setPassErr(true)
+                } else if (error.response.status === 403) {
+                    setEmailErr(true)
+                }
             },
         });
     };
-
 
 
     return (
@@ -58,6 +66,7 @@ function Login({ ChangeComp }) {
                         {...register("emailToLogin")}
                     />
                     <p className="text-sm text-red-500">{errors.emailToLogin?.message}</p>
+                    <p className="text-sm text-red-500">{emailErr ? 'Seu email não existe, faça o cadastro!' : ' '}</p>
                     <input
                         type="password"
                         className="w-full mt-2 outline-none rounded-md drop-shadow-xl"
@@ -66,6 +75,11 @@ function Login({ ChangeComp }) {
                         {...register("passwordToLogin")}
                     />
                     <p className="text-sm text-red-500">{errors.passwordToLogin?.message}</p>
+                    <p className="text-sm text-red-500">{passErr ? 'Senha incorreta' : ' '}</p>
+                    <div className="text-sm flex items-baseline mt-2 gap-2">
+                        <input ref={manterAcessoRef} type="checkbox" name="manterAcesso" />
+                        <label htmlFor="manterAcesso">Deseja manter o acesso?</label>
+                    </div>
                     <div className="flex flex-col justify-around m-2 text-sm text-red-400">
                         <p>Esqueci minha senha!</p>
                     </div>
@@ -73,7 +87,7 @@ function Login({ ChangeComp }) {
                         {isLoading ? 'CARREGANDO...' : 'ENTRAR'}
                     </button>
                 </form>
-                <Link onClick={ChangeComp}> <p className="mt-2 text-sm text-red-400">Ainda não fez cadastro? Crie sua conta!</p></Link>
+                <p onClick={ChangeComp} className="mt-2 text-sm text-red-400">Ainda não fez cadastro? Crie sua conta!</p>
             </div>
         </div>
     )
