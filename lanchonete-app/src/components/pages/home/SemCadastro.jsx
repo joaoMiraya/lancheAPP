@@ -8,7 +8,7 @@ import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
 
-function SemCadastro({subtitle, modalIsOpen, afterOpenModal, closeModal, openContinueSemCadastro, continueSemCadastroRef }) {
+function SemCadastro({subtitle, modalIsOpen, afterOpenModal, closeModal, openContinueSemCadastro, continueSemCadastroRef, ChangeComp }) {
 
 
     return (
@@ -33,11 +33,11 @@ function SemCadastro({subtitle, modalIsOpen, afterOpenModal, closeModal, openCon
             }}
 
         >
-            <div className="text-center flex flex-col gap-4">
+            <div className="text-center flex flex-col gap-4 max-w-[270px]">
                 <button className=" absolute top-0 right-0 p-2" onClick={closeModal}><AiOutlineCloseCircle size={25} color={'black'} /></button>
                 <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Ao criar uma conta você estará elegível à participar de promoções!</h2>
                 <div className="flex flex-col">
-                    <Link className="bg-black py-2 px-4 rounded-sm text-white " to={"/cadastro"}>Criar conta</Link>
+                    <button  onClick={() => {closeModal(); ChangeComp()}}  className="bg-black py-2 px-4 rounded-sm text-white " >Criar conta</button>
                     <button onClick={openContinueSemCadastro} className="bg-black py-2 px-4 rounded-sm mt-2 text-white">Pedido Rápido</button>
                     <div ref={continueSemCadastroRef} className=" hidden  flex-col mt-10">
                         <form action="">

@@ -24,6 +24,13 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    dropShadow: {
+      '3xl': '0 35px 35px rgba(0, 0, 0, 0.25)',
+      '4xl': [
+          '0 25px 55px rgba(0, 0, 0, 5)',
+          '0 25px 55px rgba(0, 0, 0, 5)'
+      ]
+    },
     extend: {
       animation: {
         'spin-slow': 'spin 3s linear infinite',

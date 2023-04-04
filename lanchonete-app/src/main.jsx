@@ -6,8 +6,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { CartProvider } from './assets/utils/cartContext';
 
-import Loading from './components/componentsReut/LoadingComp';
 
+import Loading from './components/componentsReut/LoadingComp';
 
 const Home = lazy(() => import("./components/pages/home/Home"));
 const Cadastro = lazy(() => import("./components/pages/home/Cadastro"));

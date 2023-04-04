@@ -61,6 +61,7 @@ function Home() {
                 openContinueSemCadastro={openContinueSemCadastro}
                 continueSemCadastroRef={continueSemCadastroRef}
                 subtitle={subtitle}
+                ChangeComp={ChangeComp}
             />
 
         </div>
