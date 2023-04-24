@@ -1,8 +1,7 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './App.css';
 import Footer from './components/paterns/Footer';
-import { CartContext } from './assets/utils/cartContext';
 
 import { MdOutlineMenuBook } from 'react-icons/md';
 import { CgProfile } from 'react-icons/cg';
@@ -51,11 +50,14 @@ function App() {
   /*FIM FUNÇÃO DO MENU FIXO */
 
   /*  INICIO CARRINHO DE COMPRAS */
-  const { cartItems, setCartItems } = useContext(CartContext);
-
-  const quantity = cartItems.reduce((acc, current) => {
-    return acc + current.quantity;
-  }, 0)
+  const itemsInCart = localStorage.getItem('requestToCart');
+  const itemsToParse = JSON.parse(itemsInCart);
+  let quantity = [];
+  if (!itemsInCart) {
+    quantity = 0;
+  } else {
+    quantity = itemsToParse.length
+  }
 
   return (
 

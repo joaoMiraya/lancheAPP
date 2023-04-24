@@ -1,6 +1,6 @@
 import { Jwt } from "jsonwebtoken";
 
-function verificaToken(req, res, next) {
+export function verificaToken(req, res, next) {
     const token = req.headers.authorization;
 
     if (!token) {

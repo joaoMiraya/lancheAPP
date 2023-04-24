@@ -35,7 +35,6 @@ function Login({ ChangeComp }) {
         mutate(data, {
             onSuccess: (data) => {
                 navigate("/menu")
-                console.log(data)
                 if (manterAcessoRef.current.checked) {
                     localStorage.setItem('user', JSON.stringify(data.userSession))
                 } else {

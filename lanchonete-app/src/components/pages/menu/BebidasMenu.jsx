@@ -10,7 +10,7 @@ function Bebidas() {
                 setBebidas(bebidasReturn.data)
             })
     }, [])
-    console.log(bebidas)
+    
     return (
         <>
             <div className="flex">

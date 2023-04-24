@@ -1,4 +1,4 @@
-import React, { useRef, useContext } from "react";
+import React, { useRef, useContext, useEffect } from "react";
 import lancheImg from "../../assets/images/hamburguer.png";
 
 import { CartContext } from "../../assets/utils/cartContext";
@@ -9,40 +9,13 @@ function CarouselItem({ title, items }) {
     const categoryRef = useRef();
 
     const { cartItems, setCartItems } = useContext(CartContext);
-    
+    const addToCart = (lanche) => {
+        setCartItems(prevCartItems => [...prevCartItems, lanche]);
+    }
 
-    const addToCart = () => {
-        setCartItems(() => {
-            const isItemFound = items.find((item) => item.id === 1 );
-            console.log(isItemFound)
-            if (isItemFound) {
-                return items.map((item) => {
-                    if (item.id === id) {
-                        return { ...item, quantity: item.quantity + 1 }
-                    } else {
-                        return item;
-                    }
-                });
-            } else {
-                return [...items, { id, quantity: 1, preco }];
-            }
-        });
-    };
 
-    const removeItem = (id) => {
-        setCartItems((currentItems) => {
-            if (currentItems.find((item) => item.id === id)?.quantity === 1) {
-                return currentItems.filter((item) => item.id !== id)
-            } else {
-                return currentItems.map((item) => {
-                    if (item.id === id) {
-                        return { ...item, quantity: item.quantity - 1 };
-                    } else {
-                        return item;
-                    }
-                })
-            }
-        })
+    const removeToCart = () => {
+
     }
 
     return (
@@ -76,7 +49,7 @@ function CarouselItem({ title, items }) {
                         </div>
 
                         <div className="flex items-center justify-center font-[400] text-white bg-gradient-to-br from-amber-500 to-red-800 h-8 rounded-b-md w-full mt-6 ">
-                            <button onClick={addToCart}>ADICIONAR</button>
+                            <button onClick={() => addToCart(lanche)}>ADICIONAR</button>
 
                         </div>
 

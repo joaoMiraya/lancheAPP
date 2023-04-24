@@ -35,11 +35,10 @@ body {
     display: none;
 }
 
-.compCartStyle {
-    border: solid 1px #6a6a6a;
-    background-color: #FFF;
-}
 
+.shadowItems{
+    box-shadow: 0px 0px 12px  rgba(0, 0, 0, .50);
+}
 .fixedMenuHidden {
     height: 0px;
     opacity: 0;

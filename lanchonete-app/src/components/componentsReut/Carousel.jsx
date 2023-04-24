@@ -8,7 +8,7 @@ import CarouselItem from "./CarouselItem";
 
 function Carousel() {
     const [categorias, setCategorias] = useState([]);
-
+            /* RESPONSAVEL POR FAZER A CHAMADA DOS LANCHES POR CATEGORIA NA API */
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
@@ -54,7 +54,6 @@ function Carousel() {
         };
         fetchCategorias();
     }, []);
-
 
 
     return (

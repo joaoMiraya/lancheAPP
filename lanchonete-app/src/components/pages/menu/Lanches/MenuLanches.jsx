@@ -7,10 +7,7 @@ function MenuLanches() {
 
 
     return (
-       
-
-            <Carousel />
-     
+        <Carousel />
     )
 };
 
