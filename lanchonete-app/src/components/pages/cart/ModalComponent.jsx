@@ -13,26 +13,30 @@ function ModalComponent({ item, handleCloseModal, acrescimos }) {
 
     const formIngredientesRef = useRef();
     const formAcrescimosRef = useRef();
+        const acrescimosBox = useRef();
+
     let ingredientes = item.ingredientes;
     let ingredienteSplit = ingredientes.split(", ")
 
 
 
 
-    const acrescimosBox = useRef();
     function handleShowAcrescimos() {
         acrescimosBox.current.classList.toggle('hidden')
     }
     const [acrescimoCheked, setAcrescimoChecked] = useState([]);
+    const requestToCart = localStorage.getItem('requestToCart');
+    const requestToCartParsed = JSON.parse(requestToCart);
+
 
     const onSubmit = (data, event) => {
         event.preventDefault();
-        console.log(data)
-        axios.get(`http://localhost:3550/acrescimos/${data}`)/* TROCAR POR SECRET_KEY */
-            .then(acrescimoReturn => {
-                setAcrescimoChecked(acrescimoReturn.data)
-            })
-        console.log(acrescimoCheked)
+        setAcrescimoChecked(data)
+        const itemIndexToChange = requestToCartParsed.findIndex(requestToCartParsed => requestToCartParsed.id === item.id);
+
+        console.log(itemIndexToChange)
+
+
     }
 
 

@@ -10,6 +10,7 @@ function MapaHomeLogged() {
                 className=" w-screen"
             >
             </iframe>
+            <p className="text-sm text-center"> Rua: xxxxxx, xxx - Bairro xxxx, Álvares Machado - SP</p>
         </div>
 
     )

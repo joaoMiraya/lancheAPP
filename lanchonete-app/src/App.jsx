@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useContext } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import './App.css';
 import Footer from './components/paterns/Footer';
@@ -9,6 +9,9 @@ import { AiOutlineMenu, AiOutlineClose, AiOutlineShoppingCart, AiOutlineInstagra
 
 import lanchebg from './assets/images/lanchebg.png';
 import logoImage from './assets/images/logomarcahamburgueria.png';
+
+import { CartContext } from './assets/utils/cartContext';
+
 
 function App() {
 
@@ -50,13 +53,13 @@ function App() {
   /*FIM FUNÇÃO DO MENU FIXO */
 
   /*  INICIO CARRINHO DE COMPRAS */
-  const itemsInCart = localStorage.getItem('requestToCart');
-  const itemsToParse = JSON.parse(itemsInCart);
+  const { cartItems, setCartItems } = useContext(CartContext);
+
   let quantity = [];
-  if (!itemsInCart) {
+  if (!cartItems) {
     quantity = 0;
   } else {
-    quantity = itemsToParse.length
+    quantity = cartItems.length
   }
 
   return (

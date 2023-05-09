@@ -69,6 +69,9 @@ module.exports = {
         extrabold: '800',
         black: '900',
       },
+      rotate: {
+        '360': '360deg',
+      }
     },
     
   },

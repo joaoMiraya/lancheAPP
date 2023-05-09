@@ -12,12 +12,7 @@ function CarouselItem({ title, items }) {
     const addToCart = (lanche) => {
         setCartItems(prevCartItems => [...prevCartItems, lanche]);
     }
-
-
-    const removeToCart = () => {
-
-    }
-
+ 
     return (
 
         <div ref={categoryRef} className="container overflow-x-scroll flex mt-2 w-full  ">
@@ -42,7 +37,7 @@ function CarouselItem({ title, items }) {
                                     className="w-full h-4 bg-white text-center outline-none text-xl"
                                     readOnly
                                     type="text"
-                                    value={'R$' + lanche.preco + ',00'}
+                                    value={'R$' + lanche.preco}
                                 />
 
                             </div>
