@@ -1,10 +1,12 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { object, string, ref } from 'yup';
-import axios from 'axios';
-import { useMutation, useQueryClient} from "@tanstack/react-query";
+import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { getFirestore, collection, getDocs, doc, setDoc } from 'firebase/firestore';
+import { app } from "../../../auth/firebase";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import bcrypt from "bcryptjs";
 
 const validationForm = object().shape({
@@ -16,8 +18,6 @@ const validationForm = object().shape({
     confirmPasswordRegister: string().required("O campo é obrigatório").oneOf([ref('passwordRegister'), null], 'Senhas devem ser iguais')
 });
 
-
-
 function Cadastro({ ChangeComp }) {
 
     const navigate = useNavigate();
@@ -27,33 +27,50 @@ function Cadastro({ ChangeComp }) {
         resolver: yupResolver(validationForm)
     });
 
-
     const date = new Date().toLocaleString();
     const formatedDate = date.slice(0, 10);
+    const [emailToAuth, setEmailToAuth] = useState([]);
+    const [passwordToAuth, setPasswordToAuth] = useState();
 
-    const createUserMutation = useMutation((data) => {
+    let userData = [];
+    let userAuth = [];
+    
+    const createUserMutation = useMutation((values) => {
+        const db = getFirestore(app);
+        const newUserDocRef = doc(collection(db, "usuarios"));
 
-        const cryptPass = bcrypt.hashSync(data.passwordRegister, 10)
-        const values = {
-            nome: data.nameRegister,
-            sobrenome: data.lastnameRegister,
-            email: data.emailRegister,
-            senha: cryptPass,
-            data_cadastro: formatedDate
-        }
-
-        return axios.post('http://localhost:3550/clientes', values);
+        const cryptPass = bcrypt.hashSync(values.passwordRegister, 10)
+        userAuth = {
+            email: values.emailRegister,
+            senha: values.passwordRegister
+        },
+            userData = {
+                nome: values.nameRegister,
+                sobrenome: values.lastnameRegister,
+                email: values.emailRegister,
+                senha: cryptPass,
+                data_cadastro: formatedDate
+            }
+        return setDoc(newUserDocRef, userData)
     }, {
-        onSuccess: () => {
-            alert('Cadastro efetuado com sucesso!')
-            navigate('/menu')
-            queryClient.invalidateQueries('clientes')
+        onSuccess: async () => {
+            try {
+                await createUserWithEmailAndPassword(getAuth(), userAuth.email, userAuth.senha);
+                console.log(userAuth)
+                navigate('/');
+
+            } catch (error) {
+                // Houve um erro na autenticação, pode exibir uma mensagem de erro, por exemplo
+                console.error('Erro de autenticação:', error);
+            }
+            alert('Cadastro efetuado com sucesso!');
+            navigate('/menu');
+            queryClient.invalidateQueries('clientes');
         },
         onError: () => {
-            alert('Houve algum problema com seu cadastro!')
+            alert('Houve algum problema com seu cadastro!');
         }
     });
-
 
     const createUser = useCallback(async (data) => {
         await createUserMutation.mutateAsync(data);
@@ -106,6 +123,7 @@ function Cadastro({ ChangeComp }) {
                     className="w-4/5 h-8 pl-2 mt-2 outline-none rounded-md drop-shadow-xl"
                     name="passwordRegister"
                     id="passwordRegister"
+                    autoComplete="new-password"
                     placeholder="Sua senha"
                     {...register("passwordRegister")}
                 />
@@ -115,6 +133,7 @@ function Cadastro({ ChangeComp }) {
                     className="w-4/5 h-8 pl-2 mt-2 outline-none rounded-md drop-shadow-xl"
                     name="confirmPasswordRegister"
                     id="confirmPasswordRegister"
+                    autoComplete="new-password"
                     placeholder="Confirme sua senha"
                     {...register("confirmPasswordRegister")}
                 />

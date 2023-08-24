@@ -4,12 +4,12 @@ import axios from "axios";
 function Bebidas() {
     const [bebidas, setBebidas] = useState([]);
 
-    useEffect(() => {
+ /*    useEffect(() => {
         axios.get('http://localhost:3550/bebidas')
             .then(bebidasReturn => {
                 setBebidas(bebidasReturn.data)
             })
-    }, [])
+    }, []); */
     
     return (
         <>

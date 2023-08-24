@@ -8,6 +8,7 @@ import { CartProvider } from '../assets/utils/cartContext';
 
 import Loading from '../components/componentsReut/LoadingComp';
 
+const Teste = lazy(() => import("../components/Teste"));
 const Home = lazy(() => import("../components/pages/home/Home"));
 const Cadastro = lazy(() => import("../components/pages/home/Cadastro"));
 const Profile = lazy(() => import("../components/pages/profile/Profile"));
@@ -37,6 +38,8 @@ root.render(
             <Route path='*' element={<NotFound />} />
 
             <Route path='/admin' element={<Admin />} />
+            <Route path='/teste' element={<Teste />} />
+
             <Route path='/admin/dashboard' element={<AdminRoute> <Dashboard /> </AdminRoute>} />
             <Route path='/admin/dashboard/lanche/add' element={<AddLanche />} />
 

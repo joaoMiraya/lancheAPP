@@ -20,7 +20,7 @@ function Menu() {
                 
                 <MenusOfMenu />
 
-                <div className="bg-white flex items-center justify-start mt-10 py-1 rounded-md drop-shadow-2xl">
+                <div className="bg-white flex items-center justify-start mt-10 py-1 rounded-md shadow-2xl">
                     <GiBeerBottle className="absolute" size={40} />
                     <div className="w-full text-center flex justify-around">
                         <Bebidas />
